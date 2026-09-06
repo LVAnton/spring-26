@@ -1,4 +1,3 @@
-
 import pandas as pd
 import numpy as np
 from sklearn.ensemble import GradientBoostingClassifier
@@ -6,8 +5,8 @@ from sklearn.model_selection import cross_val_score, StratifiedKFold
 from sklearn.preprocessing import StandardScaler
 import time
 
-train = pd.read_csv('small_train_50.csv')
-test = pd.read_csv('small_test_50.csv')
+train = pd.read_csv('train.csv')
+test = pd.read_csv('test.csv')
 
 train_y = (train["label"] == 1).astype(int).values
 train_x = train.drop('label', axis=1).values
@@ -130,12 +129,11 @@ for train_idx, val_idx in skf.split(X_train, y_train):
 #кросс-валидация (sklearn)
 sk_cv = cross_val_score(gb_sk, X_train, y_train, cv=5, scoring='accuracy')
 
-print("\n" + "="*60)
+
 print(f"{'Метрика':<20} {'Наша реализация':<20} {'sklearn':<20}")
-print("="*60)
 print(f"{'Train Accuracy':<20} {my_train_acc:<20.4f} {sk_train_acc:<20.4f}")
 print(f"{'Test Accuracy':<20} {my_test_acc:<20.4f} {sk_test_acc:<20.4f}")
 print(f"{'CV Accuracy':<20} {np.mean(my_cv):<20.4f} {np.mean(sk_cv):<20.4f}")
 print(f"{'CV Std':<20} {np.std(my_cv):<20.4f} {np.std(sk_cv):<20.4f}")
 print(f"{'Time (sec)':<20} {my_time:<20.4f} {sk_time:<20.4f}")
-print("="*60)
+
